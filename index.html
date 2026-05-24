@@ -88,53 +88,18 @@
         font-weight: 400 !important;
       }
 
-      /* Mesh gradient field — fixed, GPU-light */
-      .mesh-bg {
+      /* Neural network canvas — emerald + purple nodes drifting with parallax */
+      #neural-canvas {
         position: fixed;
-        inset: 0;
+        top: 0; left: 0;
+        width: 100vw;
+        height: 220vh;
         z-index: 0;
+        opacity: 0.5;
         pointer-events: none;
-        overflow: hidden;
-      }
-      .mesh-bg::before,
-      .mesh-bg::after {
-        content: '';
-        position: absolute;
-        width: 70vmax;
-        height: 70vmax;
-        border-radius: 50%;
-        filter: blur(140px);
-        opacity: 0.55;
         will-change: transform;
-        transform: translateZ(0);
-      }
-      .mesh-bg::before {
-        background: radial-gradient(
-          closest-side,
-          rgba(16, 185, 129, 0.55),
-          rgba(16, 185, 129, 0) 70%
-        );
-        top: -25vmax;
-        left: -20vmax;
-        animation: drift1 28s ease-in-out infinite alternate;
-      }
-      .mesh-bg::after {
-        background: radial-gradient(
-          closest-side,
-          rgba(168, 85, 247, 0.45),
-          rgba(168, 85, 247, 0) 70%
-        );
-        bottom: -30vmax;
-        right: -25vmax;
-        animation: drift2 34s ease-in-out infinite alternate;
-      }
-      @keyframes drift1 {
-        from { transform: translate3d(0, 0, 0) scale(1); }
-        to { transform: translate3d(6vmax, 4vmax, 0) scale(1.08); }
-      }
-      @keyframes drift2 {
-        from { transform: translate3d(0, 0, 0) scale(1); }
-        to { transform: translate3d(-5vmax, -3vmax, 0) scale(1.1); }
+        --parallax-y: 0px;
+        transform: translate3d(0, var(--parallax-y), 0) scale(1.2);
       }
 
       /* Film grain — fixed, pointer-events:none */
@@ -293,7 +258,7 @@
 
       /* Reduce motion */
       @media (prefers-reduced-motion: reduce) {
-        .reveal, .reveal.in, .mesh-bg::before, .mesh-bg::after, .blink, .pulse-dot {
+        .reveal, .reveal.in, .blink, .pulse-dot {
           animation: none !important;
           transition: none !important;
           opacity: 1 !important;
@@ -306,7 +271,7 @@
 
   <body class="relative min-h-[100dvh] overflow-x-hidden bg-ink-950 text-white antialiased selection:bg-jade-500/30 selection:text-white">
     <!-- Background field -->
-    <div class="mesh-bg" aria-hidden="true"></div>
+    <canvas id="neural-canvas" aria-hidden="true"></canvas>
     <div class="grain" aria-hidden="true"></div>
 
     <!-- ==================== NAV ==================== -->
@@ -1356,6 +1321,98 @@
     </main>
 
     <script>
+      // ── Neural-network canvas (emerald + purple drifting nodes, scroll parallax) ──
+      (function () {
+        const canvas = document.getElementById('neural-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let W, H, nodes;
+
+        const EMERALD = 'rgba(16,185,129,';
+        const PURPLE  = 'rgba(168,85,247,';
+        const NODE_COUNT = 110;
+        const CONNECT_DIST = 160;
+        const PARALLAX_FACTOR = 0.1;
+
+        function resize() {
+          const dpr = window.devicePixelRatio || 1;
+          W = window.innerWidth;
+          H = window.innerHeight * 2.2;
+          canvas.width  = W * dpr;
+          canvas.height = H * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        function makeNode() {
+          return {
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: Math.random() * 2.2 + 1.2,
+            hue: Math.random() < 0.62 ? EMERALD : PURPLE,
+          };
+        }
+        function init() {
+          resize();
+          nodes = Array.from({ length: NODE_COUNT }, makeNode);
+        }
+        function draw() {
+          ctx.clearRect(0, 0, W, H);
+          for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+              const dx = nodes[i].x - nodes[j].x;
+              const dy = nodes[i].y - nodes[j].y;
+              const d  = Math.sqrt(dx * dx + dy * dy);
+              if (d < CONNECT_DIST) {
+                const alpha = (1 - d / CONNECT_DIST) * 0.35;
+                ctx.beginPath();
+                ctx.moveTo(nodes[i].x, nodes[i].y);
+                ctx.lineTo(nodes[j].x, nodes[j].y);
+                ctx.strokeStyle = nodes[i].hue + alpha + ')';
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+              }
+            }
+          }
+          nodes.forEach(n => {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+            ctx.fillStyle = n.hue + '0.7)';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r * 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = n.hue + '0.12)';
+            ctx.fill();
+          });
+          nodes.forEach(n => {
+            n.x += n.vx;
+            n.y += n.vy;
+            if (n.x < 0 || n.x > W) n.vx *= -1;
+            if (n.y < 0 || n.y > H) n.vy *= -1;
+          });
+          requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', () => { resize(); init(); }, { passive: true });
+        window.addEventListener('scroll', () => {
+          canvas.style.setProperty('--parallax-y', `${-window.scrollY * PARALLAX_FACTOR}px`);
+        }, { passive: true });
+
+        init();
+        if (prefersReduced) {
+          ctx.clearRect(0, 0, W, H);
+          nodes.forEach(n => {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+            ctx.fillStyle = n.hue + '0.7)';
+            ctx.fill();
+          });
+        } else {
+          draw();
+        }
+      })();
+
       // Reveal on scroll — IntersectionObserver only (no scroll listeners)
       const io = new IntersectionObserver(
         (entries) => {
