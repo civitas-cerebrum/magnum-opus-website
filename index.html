@@ -460,79 +460,136 @@
                     <span class="h-2.5 w-2.5 rounded-full bg-white/10"></span>
                   </div>
                   <div class="hidden items-center gap-2 text-[11px] tracking-wider text-white/40 md:flex">
-                    <span>opus · run #4,218</span>
+                    <span>magnum-opus-pilot · scaffold run #1</span>
                     <span class="h-1 w-1 rounded-full bg-white/20"></span>
                     <span class="flex items-center gap-1.5">
                       <span class="h-1.5 w-1.5 rounded-full bg-jade-400 pulse-dot"></span>
-                      <span class="text-jade-400">live</span>
+                      <span class="text-jade-400">auto</span>
                     </span>
                   </div>
-                  <div class="text-[11px] text-white/40">chromium · webkit · firefox</div>
+                  <div class="text-[11px] text-white/40">~/Github · zsh</div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12">
                   <!-- Console -->
                   <div class="dot-grid relative col-span-1 px-5 py-7 font-mono text-[12.5px] leading-relaxed text-white/75 lg:col-span-7 lg:px-8 lg:py-9">
-                    <div class="space-y-2.5">
-                      <div class="flex items-center gap-3">
-                        <span class="text-white/35">›</span>
-                        <span class="text-white/55">opus map ./web</span>
+                    <div class="space-y-3">
+                      <!-- Bash install with progress -->
+                      <div class="flex items-start gap-3">
+                        <span class="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-jade-400"></span>
+                        <div class="min-w-0 flex-1">
+                          <div><span class="text-white/85">Bash</span><span class="text-white/45">(npx playwright install chromium 2&gt;&amp;1 | tail -3)</span></div>
+                          <div class="mt-1 space-y-0.5 text-white/55">
+                            <div class="flex items-center gap-3">
+                              <span class="text-white/30">▕</span>
+                              <span class="inline-block h-2 w-[60%] rounded-sm bg-white/20"></span>
+                              <span class="text-white/40">90% of 97.5 MiB</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                              <span class="text-white/30">▕</span>
+                              <span class="inline-block h-2 w-[68%] rounded-sm bg-white/30"></span>
+                              <span class="text-white/40">100% of 97.5 MiB</span>
+                            </div>
+                          </div>
+                          <div class="mt-1 text-white/45">Chrome Headless Shell 148.0.7778.96 (playwright chromium-headless-shell v1223) downloaded</div>
+                          <div class="mt-0.5 text-white/35">Allowed by auto mode classifier</div>
+                        </div>
                       </div>
-                      <div class="pl-5 text-white/45">discovered 47 routes · 312 interactive elements · 19 journeys</div>
-                      <div class="flex items-center gap-3">
-                        <span class="text-white/35">›</span>
-                        <span class="text-white/55">opus compose --journey "checkout"</span>
+
+                      <div class="pl-5 text-white/40">Listed <span class="text-white/65">2 directories</span> <span class="text-white/30">(ctrl+o to expand)</span></div>
+
+                      <!-- Preconditions -->
+                      <div class="flex items-start gap-3">
+                        <span class="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-jade-400"></span>
+                        <div class="min-w-0 flex-1 text-white/75">
+                          All preconditions met. Starting <span class="text-white/95">Phase 1</span> by loading the <span class="text-jade-300">element-interactions</span> skill for Stage 1 scaffold shapes.
+                        </div>
                       </div>
-                      <div class="pl-5 text-white/45">
-                        <span class="text-jade-400">✓</span> happy path · <span class="text-jade-400">✓</span> empty cart · <span class="text-jade-400">✓</span> declined card · <span class="text-jade-400">✓</span> 3DS challenge · <span class="text-jade-400">✓</span> guest · <span class="text-jade-400">✓</span> mobile webkit
+
+                      <!-- Skill loaded -->
+                      <div class="flex items-start gap-3">
+                        <span class="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-jade-400"></span>
+                        <div class="min-w-0 flex-1">
+                          <div><span class="text-white/85">Skill</span><span class="text-white/45">(element-interactions)</span></div>
+                          <div class="mt-0.5 text-white/55">Successfully loaded skill</div>
+                        </div>
                       </div>
-                      <div class="flex items-center gap-3">
-                        <span class="text-white/35">›</span>
-                        <span class="text-white/55">opus run --parallel 32 --suite all</span>
+
+                      <!-- Scaffolding task block -->
+                      <div class="rounded-xl border border-amber-300/15 bg-amber-300/[0.03] p-3 pl-4">
+                        <div class="flex items-center gap-2 text-amber-200/90">
+                          <span>+ Scaffolding e2e suite…</span>
+                          <span class="text-amber-200/40">(2m 13s · ↓ 5.6k tokens · almost done thinking)</span>
+                        </div>
+                        <ul class="mt-2 space-y-1 pl-2 text-[12px]">
+                          <li class="flex items-center gap-2 rounded-md bg-amber-300/10 px-1.5 py-0.5 text-amber-200">
+                            <span class="text-amber-300">▣</span>
+                            <span>Phase 1 — Scaffold</span>
+                          </li>
+                          <li class="flex items-center gap-2 px-1.5 py-0.5 text-white/55">
+                            <span class="text-white/35">▢</span>
+                            <span>Phase 2 — Groundwork</span>
+                          </li>
+                          <li class="flex items-center gap-2 px-1.5 py-0.5 text-white/55">
+                            <span class="text-white/35">▢</span>
+                            <span>Phase 3 — Happy path specs</span>
+                          </li>
+                          <li class="flex items-center gap-2 px-1.5 py-0.5 text-white/55">
+                            <span class="text-white/35">▢</span>
+                            <span>Phase 4 — Journey mapping</span>
+                          </li>
+                          <li class="flex items-center gap-2 px-1.5 py-0.5 text-white/55">
+                            <span class="text-white/35">▢</span>
+                            <span>Phase 5 — Coverage expansion</span>
+                          </li>
+                          <li class="pl-5 text-white/35">… +3 pending</li>
+                        </ul>
                       </div>
-                      <div class="pl-5 text-white/45">412 specs · 4m 18s · <span class="text-jade-400">408 pass</span> · <span class="text-amber-300">4 flake → self-healed</span></div>
-                      <div class="flex items-center gap-3">
-                        <span class="text-white/35">›</span>
-                        <span class="text-white/55">opus heal</span>
-                      </div>
-                      <div class="pl-5 text-white/45">
-                        detected DOM drift in <span class="text-white/80">nav-account-dropdown</span> · rewrote 7 locators · evidence stored ·
-                        <span class="text-jade-400">suite green</span>
-                      </div>
-                      <div class="flex items-center gap-3 pt-1">
+
+                      <!-- Prompt -->
+                      <div class="flex items-center gap-3 border-t border-white/5 pt-3">
                         <span class="text-white/35">›</span>
                         <span class="blink inline-block h-3.5 w-2 bg-white/70"></span>
+                      </div>
+
+                      <!-- Footer hint -->
+                      <div class="text-[11px] text-white/35">
+                        <span class="text-jade-400">⤳ auto mode on</span>
+                        <span class="text-white/30">(shift+tab to cycle) · esc to interrupt · ctrl+t to hide tasks</span>
                       </div>
                     </div>
                   </div>
 
                   <!-- Status panel -->
                   <div class="relative col-span-1 grid grid-cols-2 gap-3 border-t border-white/5 p-5 lg:col-span-5 lg:grid-cols-1 lg:border-l lg:border-t-0 lg:p-6">
-                    <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
-                      <div class="text-[10px] uppercase tracking-[0.2em] text-white/40">Coverage</div>
-                      <div class="mt-2 flex items-baseline gap-2">
-                        <span class="font-display text-3xl font-medium tracking-tight">94.3<span class="text-white/40">%</span></span>
-                        <span class="text-xs text-jade-400">+12.1</span>
+                    <div class="rounded-2xl border border-amber-300/20 bg-amber-300/[0.04] p-4">
+                      <div class="flex items-center justify-between">
+                        <div class="text-[10px] uppercase tracking-[0.2em] text-amber-300/80">Active phase</div>
+                        <span class="font-mono text-[10px] text-amber-300/70">1 / 8</span>
                       </div>
+                      <div class="mt-2 font-display text-2xl font-medium tracking-tight">Scaffold</div>
                       <div class="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/5">
-                        <div class="h-full w-[94%] rounded-full bg-gradient-to-r from-jade-400 to-emerald-500"></div>
+                        <div class="h-full w-[68%] rounded-full bg-gradient-to-r from-amber-300 to-amber-500"></div>
                       </div>
+                      <div class="mt-2 text-[11px] text-white/45">Stage 1 of 3 — almost done</div>
                     </div>
                     <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
-                      <div class="text-[10px] uppercase tracking-[0.2em] text-white/40">Mean repair</div>
+                      <div class="text-[10px] uppercase tracking-[0.2em] text-white/40">Run telemetry</div>
                       <div class="mt-2 flex items-baseline gap-2">
-                        <span class="font-display text-3xl font-medium tracking-tight">38<span class="text-white/40">s</span></span>
-                        <span class="text-xs text-jade-400">autonomous</span>
+                        <span class="font-display text-3xl font-medium tracking-tight">2m <span class="text-white/40">13s</span></span>
+                        <span class="text-xs text-jade-400">↓ 5.6k tokens</span>
                       </div>
-                      <div class="mt-3 text-[11px] text-white/45">avg time from drift detection → green suite</div>
+                      <div class="mt-3 text-[11px] text-white/45">elapsed · model is thinking</div>
                     </div>
                     <div class="col-span-2 rounded-2xl border border-white/5 bg-white/[0.02] p-4 lg:col-span-1">
-                      <div class="text-[10px] uppercase tracking-[0.2em] text-white/40">Recent journeys</div>
-                      <ul class="mt-3 space-y-2 text-xs text-white/65">
-                        <li class="flex items-center justify-between"><span>Onboarding · v3.2</span><span class="text-jade-400">✓ 28/28</span></li>
-                        <li class="flex items-center justify-between"><span>Checkout</span><span class="text-jade-400">✓ 96/96</span></li>
-                        <li class="flex items-center justify-between"><span>Org settings</span><span class="text-amber-300">⟳ healing</span></li>
-                        <li class="flex items-center justify-between"><span>Billing portal</span><span class="text-jade-400">✓ 41/41</span></li>
+                      <div class="text-[10px] uppercase tracking-[0.2em] text-white/40">Pipeline</div>
+                      <ul class="mt-3 space-y-2 text-xs">
+                        <li class="flex items-center justify-between"><span class="text-amber-200">Phase 1 · Scaffold</span><span class="text-amber-300/80">▣ active</span></li>
+                        <li class="flex items-center justify-between text-white/55"><span>Phase 2 · Groundwork</span><span class="text-white/35">▢ queued</span></li>
+                        <li class="flex items-center justify-between text-white/55"><span>Phase 3 · Happy path</span><span class="text-white/35">▢ queued</span></li>
+                        <li class="flex items-center justify-between text-white/55"><span>Phase 4 · Journey map</span><span class="text-white/35">▢ queued</span></li>
+                        <li class="flex items-center justify-between text-white/55"><span>Phase 5 · Coverage</span><span class="text-white/35">▢ queued</span></li>
+                        <li class="flex items-center justify-between text-white/40 italic"><span>+ 3 more</span><span></span></li>
                       </ul>
                     </div>
                   </div>
