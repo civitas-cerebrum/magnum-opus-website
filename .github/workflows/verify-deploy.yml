@@ -1,0 +1,41 @@
+name: Verify deployed site
+
+# After every push to main (which triggers a Pages deploy in legacy mode),
+# wait for the deploy to settle and then fetch the team URL to assert that
+# the actual marketing site is being served — not Jekyll's auto-rendered
+# README, which is what we get when index.html goes missing at the root.
+#
+# Fails loud if the response looks like Jekyll's fallback. This is the
+# guardrail that catches a future "moved index.html, broke deploy"
+# situation immediately, instead of letting it bake silently for weeks.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Pages to redeploy
+        run: sleep 90
+
+      - name: Fetch deployed site
+        id: fetch
+        run: |
+          curl -sL https://civitas-cerebrum.github.io/magnum-opus-website/ -o /tmp/deployed.html
+          echo "size=$(wc -c < /tmp/deployed.html)" >> "$GITHUB_OUTPUT"
+
+      - name: Assert real site (not Jekyll fallback)
+        run: |
+          if grep -q "Jekyll" /tmp/deployed.html; then
+            echo "::error::Deployed page contains 'Jekyll' marker — Pages is serving the README fallback, not the actual site."
+            exit 1
+          fi
+          if ! grep -q 'id="neural-canvas"\|magnum-opus-pilot\|class="bezel' /tmp/deployed.html; then
+            echo "::error::Deployed page is missing expected markers (canvas, scaffold run id, or bezel cards). The site we expect is NOT being served."
+            head -c 2000 /tmp/deployed.html
+            exit 1
+          fi
+          echo "Deployed site looks healthy (size=${{ steps.fetch.outputs.size }} bytes)"
